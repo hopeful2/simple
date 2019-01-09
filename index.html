@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title> simple test cast </title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+
+    <link rel="stylesheet" href="https://dev.mavo.io/dist/mavo.css" />
+    <script src="https://dev.mavo.io/dist/mavo.es5.js"></script>
+
+  </head>
+  <body style="padding: 2em;">
+
+    <h1 style="text-align: center;">Simple Test Case of Mavo - Expressions.register() and Expressions.unregister() </h1>
+
+    <div style="padding: 2em 0em;">
+      This simple case tests bugs in Expressions.register() and Expressions.unregister() when an expression involves multiple Mavo applications.
+    </div>
+
+    <div mv-app="app1">
+    	<div>Application name: <span property="appname">Mavo</span></div>
+    </div>
+
+    <div mv-app="app2">
+    	<div>What do you think about [app1.appname]</div>
+    	<div property="rating">awesome</div>
+
+    </div>
+
+    <div mv-app="app3">
+    	<h2>Discovery:</h2>
+    	<div id="multi-app-expression">	[app1.appname] is [if(app1.rating, app1.rating, app2.rating)] ! </div>
+      <div style="padding: 2em 0em;"> Developers, check the dev console for errors. Click the button below to watch errors during unregistering domexpression object.</div>
+      <div style="text-align: center; padding: 10vh;"> <button id="unregister" type="button" style="padding: 10px;">Click me to unregister domexpression</button></div>
+    </div>
+
+    <script>
+      document.querySelector('#unregister').addEventListener('click', function(e){
+        Mavo.all.app3.expressions.unregister(Mavo.DOMExpression.elements.get(
+          document.querySelector('#multi-app-expression')
+        )[0]);
+      })
+    </script>
+
+
+  </body>
+</html>
